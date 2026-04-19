@@ -1,0 +1,201 @@
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #172033;
+  background: #f3f6fb;
+  line-height: 1.5;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, input, textarea { font: inherit; }
+
+.page-shell {
+  padding: 24px;
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.topbar h1 {
+  margin: 4px 0;
+  font-size: 30px;
+}
+
+.topbar p { margin: 0; color: #5f6b84; }
+.eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #5274ff; font-weight: 700; }
+.status-chip, .badge {
+  background: white;
+  border: 1px solid #dbe3ef;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.badge.green { color: #0b7a48; border-color: #cfe9dd; background: #f2fbf6; }
+
+.split-layout {
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr;
+  gap: 20px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #e1e7f0;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 14px 40px rgba(20, 36, 77, 0.08);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.panel-header h2 { margin: 0; font-size: 22px; }
+.panel-header p { margin: 4px 0 0; color: #65728a; }
+
+.form-grid { display: grid; gap: 14px; margin-bottom: 14px; }
+.form-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+.form-grid.one-col { grid-template-columns: 1fr; }
+.field-block label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.field-block input, .field-block textarea {
+  width: 100%;
+  border: 1px solid #d6dfeb;
+  border-radius: 12px;
+  background: #f8fbff;
+  padding: 12px 14px;
+  color: #1e2741;
+}
+.field-block textarea { min-height: 96px; resize: vertical; }
+.placeholder { color: #7d8799; }
+.pill-wrap {
+  min-height: 48px;
+  border: 1px solid #d6dfeb;
+  border-radius: 12px;
+  background: #f8fbff;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.pill {
+  background: #edf3ff;
+  color: #3652c7;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.suggestion-box {
+  margin-top: 18px;
+  border: 1px dashed #c8d5eb;
+  border-radius: 16px;
+  padding: 16px;
+  background: #fafcff;
+}
+.suggestion-box h3 { margin: 0 0 10px; }
+.suggestion-box p, .suggestion-box ul { margin: 0; color: #59657d; }
+
+.actions-row {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.starter-prompts { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+.ghost-btn, .secondary-btn {
+  border: 1px solid #d8e1ef;
+  background: #f9fbff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-align: left;
+}
+.ghost-btn:hover, .secondary-btn:hover { background: #f1f6ff; }
+
+.chat-thread {
+  height: 430px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 2px 10px;
+}
+.chat-bubble {
+  padding: 14px;
+  border-radius: 16px;
+  max-width: 90%;
+}
+.chat-bubble.assistant {
+  align-self: flex-start;
+  background: #f2f7ff;
+  border: 1px solid #d7e5ff;
+}
+.chat-bubble.user {
+  align-self: flex-end;
+  background: #effbf5;
+  border: 1px solid #cdeedb;
+}
+.bubble-role {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #5f6d83;
+}
+.typing, .error-box, .success-box {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+.typing { background: #f5f7fb; color: #5e6a7f; }
+.error-box { background: #fff2f2; color: #a53333; }
+.success-box { background: #eefbf3; color: #0f6b3c; }
+.composer {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+}
+.composer textarea {
+  width: 100%;
+  min-height: 96px;
+  border: 1px solid #d6dfeb;
+  border-radius: 14px;
+  padding: 12px;
+}
+.primary-btn {
+  border: none;
+  border-radius: 14px;
+  padding: 0 18px;
+  background: linear-gradient(135deg, #355cff, #6a61ff);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.primary-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+@media (max-width: 1024px) {
+  .split-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .page-shell { padding: 16px; }
+  .topbar { flex-direction: column; }
+  .form-grid.two-col, .composer { grid-template-columns: 1fr; }
+}

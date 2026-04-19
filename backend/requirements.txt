@@ -1,0 +1,9 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.8.2
+python-dotenv==1.0.1
+sqlalchemy==2.0.34
+pymysql==1.1.1
+langgraph==0.2.14
+langchain==0.2.15
+langchain-groq==0.1.9
