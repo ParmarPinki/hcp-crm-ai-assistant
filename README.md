@@ -160,7 +160,7 @@ For the real assignment demo, add your Groq key in `backend/.env`:
 
 ```env
 GROQ_API_KEY=your_real_groq_api_key
-MODEL_NAME=gemma2-9b-it
+MODEL_NAME=llama-3.1-8b-instant
 ALLOW_MOCK_LLM=true
 ```
 
