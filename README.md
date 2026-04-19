@@ -166,6 +166,106 @@ ALLOW_MOCK_LLM=true
 
 If you do not add a Groq key, the app still runs in **mock AI mode** so you can test the UI and LangGraph flow locally.
 
+## 5) High-Level Architecture
+
+```text
++----------------------- FRONTEND -----------------------+
+| React + JavaScript + Vite                              |
+| Redux Toolkit                                          |
+|                                                        |
+|  +-------------------+    +-------------------------+  |
+|  | Interaction Form  |    | AI Assistant Chat Panel |  |
+|  | (read-only draft) |    | user enters natural     |  |
+|  | left panel        |    | language messages       |  |
+|  +-------------------+    +-------------------------+  |
+|              \                 /                       |
+|               \               /                        |
+|                \             /                         |
+|                 +-----------+                          |
+|                 | Redux     |                          |
+|                 | Store     |                          |
+|                 | - form    |                          |
+|                 | - chat    |                          |
+|                 | - status  |                          |
+|                 +-----------+                          |
++------------------------|------------------------------+
+                         |
+                         | HTTP / JSON
+                         v
++------------------------ BACKEND -----------------------+
+| FastAPI API                                             |
+|                                                        |
+|  POST /api/ai/chat                                     |
+|  POST /api/interactions                                |
+|                                                        |
+|                +--------------------------+            |
+|                | LangGraph Agent          |            |
+|                | shared state + routing   |            |
+|                +--------------------------+            |
+|                   |        |        |                  |
+|                   v        v        v                  |
+|          +--------------+  +------------------+       |
+|          | Log/Edit via |  | Rule-based tools |       |
+|          | Groq LLM     |  | resolve/search   |       |
+|          +--------------+  +------------------+       |
+|                   \         /                          |
+|                    \       /                           |
+|                     v     v                            |
+|                +------------------+                    |
+|                | Suggestions tool |                    |
+|                +------------------+                    |
++------------------------|------------------------------+
+                         |
+                         | SQLAlchemy / ORM
+                         v
++------------------------ DATABASE ----------------------+
+| MySQL                                                   |
+| - interactions                                          |
+| - audit / saved interaction data                        |
++--------------------------------------------------------+
+```
+
+## 6) LangGraph Workflow
+
+```text
+                      +------------------+
+                      |   route_intent   |
+                      +------------------+
+                         /      |      \
+                        /       |       \
+                       v        v        v
+          +----------------+  +----------------+  +----------------------+
+          |log_interaction |  |edit_interaction|  | suggest_follow_up    |
+          |    _tool       |  |    _tool       |  |       _tool          |
+          +----------------+  +----------------+  +----------------------+
+                    \               /
+                     \             /
+                      v           v
+                 +----------------------+
+                 |   resolve_hcp_tool   |
+                 +----------------------+
+                            |
+                            v
+                 +----------------------+
+                 | search_materials_tool|
+                 +----------------------+
+                            |
+                            v
+                 +----------------------+
+                 | suggest_follow_up    |
+                 |       _tool          |
+                 +----------------------+
+                            |
+                            v
+                 +----------------------+
+                 |  finalize_response   |
+                 +----------------------+
+                            |
+                            v
+                           END
+```
+
+
 ## Example prompts to test
 
 - `Today I met Dr. Smith and discussed Product X efficacy. Sentiment was positive and I shared brochures.`
@@ -173,9 +273,3 @@ If you do not add a Groq key, the app still runs in **mock AI mode** so you can 
 - `Suggest next best actions for this HCP.`
 - `I also distributed samples and want a follow up next week.`
 
-## Notes
-
-- The app saves interactions to **MySQL** through FastAPI.
-- Every AI request writes an **audit log** record.
-- The current implementation uses `Base.metadata.create_all()` for quick setup instead of Alembic migrations.
-- For a polished submission, you can later add auth, HCP master lookup tables, and richer validation.
